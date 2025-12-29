@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>Electricity Receipt Generator</title>
+
+<link rel="stylesheet" href="style.css">
+
+<!-- PDF Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+
+<h2>Electricity Bill Receipt Generator</h2>
+
+<form id="receiptForm">
+
+  उपभोक्ता का नाम:
+  <input type="text" id="name" required><br>
+
+  खाता संख्या:
+  <input type="text" id="account" required><br>
+
+  रसीद संख्या:
+  <input type="text" id="receiptNo" required><br>
+
+  CSC Transaction ID:
+  <input type="text" id="txnId" readonly><br>
+
+  भुगतान प्रकार:
+  <select id="paymentType">
+    <option>Wallet (CSC)</option>
+    <option>UPI</option>
+    <option>Cash</option>
+  </select><br>
+
+  राशि (₹):
+  <input type="number" id="amount" required><br><br>
+
+  <button type="submit">रसीद बनाएं</button>
+
+</form>
+
+<hr>
+
+<!-- RECEIPT -->
+<div id="receipt" class="receipt">
+
+  <h3 style="text-align:center;">कंप्यूटर जनित रसीद</h3>
+
+  <p>रसीद संख्या : <span id="rReceipt"></span></p>
+  <p>CSC Transaction ID : <span id="rTxnId"></span></p>
+  <p>उपभोक्ता का नाम : <span id="rName"></span></p>
+  <p>खाता संख्या : <span id="rAccount"></span></p>
+  <p>भुगतान प्रकार : <span id="rPayment"></span></p>
+  <p>कुल राशि : ₹ <span id="rAmount"></span></p>
+  <p>शब्दों में (English) : <span id="rWordsEn"></span></p>
+  <p>शब्दों में (Hindi) : <span id="rWordsHi"></span></p>
+  <p>तिथि : <span id="rDate"></span></p>
+
+  <p style="font-size:12px;">
+    यह एक कंप्यूटर जनित रसीद है, अतः हस्ताक्षर की आवश्यकता नहीं है।
+  </p>
+
+  <button onclick="downloadPDF()">PDF Download</button>
+  <button onclick="window.print()">Print</button>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

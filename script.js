@@ -1,7 +1,7 @@
 
 /**************************************
  * TRANSACTION ID AUTO GENERATOR
- * Start from 22649203 (8 digits)
+ * Start from 22649203
  **************************************/
 function generateTransactionId() {
   const START_ID = 22649203;
@@ -14,15 +14,15 @@ function generateTransactionId() {
   }
 
   localStorage.setItem("lastTxnId", lastId);
-  return String(lastId); // already 8 digits
+  return String(lastId);
 }
 
-// Auto-fill Transaction ID on page load
+// Auto-fill on page load
 document.getElementById("txnId").value = generateTransactionId();
 
 
 /**************************************
- * ENGLISH NUMBER TO WORDS (Basic)
+ * ENGLISH NUMBER TO WORDS
  **************************************/
 function numberToWords(num) {
   const a = [
@@ -46,12 +46,12 @@ function numberToWords(num) {
 
 
 /**************************************
- * HINDI AMOUNT TO WORDS (RUPEES + PAISE)
- * FULL & CORRECT (Indian System)
+ * HINDI AMOUNT TO WORDS (100% CORRECT)
+ * 1999 = एक हज़ार नौ सौ निन्यानवे
  **************************************/
 function amountToHindiWords(amount) {
 
-  const hindiNumbers = [
+  const hindi = [
     "", "एक", "दो", "तीन", "चार", "पाँच", "छह", "सात", "आठ", "नौ",
     "दस", "ग्यारह", "बारह", "तेरह", "चौदह", "पंद्रह",
     "सोलह", "सत्रह", "अठारह", "उन्नीस",
@@ -77,23 +77,23 @@ function amountToHindiWords(amount) {
     let str = "";
 
     if (num >= 10000000) {
-      str += hindiNumbers[Math.floor(num / 10000000)] + " करोड़ ";
+      str += hindi[Math.floor(num / 10000000)] + " करोड़ ";
       num %= 10000000;
     }
     if (num >= 100000) {
-      str += hindiNumbers[Math.floor(num / 100000)] + " लाख ";
+      str += hindi[Math.floor(num / 100000)] + " लाख ";
       num %= 100000;
     }
     if (num >= 1000) {
-      str += hindiNumbers[Math.floor(num / 1000)] + " हज़ार ";
+      str += hindi[Math.floor(num / 1000)] + " हज़ार ";
       num %= 1000;
     }
     if (num >= 100) {
-      str += hindiNumbers[Math.floor(num / 100)] + " सौ ";
+      str += hindi[Math.floor(num / 100)] + " सौ ";
       num %= 100;
     }
     if (num > 0) {
-      str += hindiNumbers[num];
+      str += hindi[num];
     }
 
     return str.trim();

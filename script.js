@@ -5,13 +5,12 @@
  **************************************/
 function generateTransactionId() {
   const START_ID = 22649203;
-
   let lastId = localStorage.getItem("lastTxnId");
 
   if (!lastId) {
     lastId = START_ID;
   } else {
-    lastId = parseInt(lastId) + 1;
+    lastId = parseInt(lastId, 10) + 1;
   }
 
   localStorage.setItem("lastTxnId", lastId);
@@ -28,8 +27,8 @@ document.getElementById("txnId").value = generateTransactionId();
 function numberToWords(num) {
   const a = [
     "", "One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten",
-    "Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen",
-    "Eighteen","Nineteen"
+    "Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen",
+    "Seventeen","Eighteen","Nineteen"
   ];
   const b = [
     "", "", "Twenty","Thirty","Forty","Fifty",
@@ -48,47 +47,53 @@ function numberToWords(num) {
 
 /**************************************
  * HINDI AMOUNT TO WORDS (RUPEES + PAISE)
- * Indian system (हज़ार, लाख, करोड़)
+ * FULL & CORRECT (Indian System)
  **************************************/
 function amountToHindiWords(amount) {
 
-  const ones = [
+  const hindiNumbers = [
     "", "एक", "दो", "तीन", "चार", "पाँच", "छह", "सात", "आठ", "नौ",
     "दस", "ग्यारह", "बारह", "तेरह", "चौदह", "पंद्रह",
-    "सोलह", "सत्रह", "अठारह", "उन्नीस"
+    "सोलह", "सत्रह", "अठारह", "उन्नीस",
+    "बीस", "इक्कीस", "बाईस", "तेईस", "चौबीस", "पच्चीस",
+    "छब्बीस", "सत्ताईस", "अट्ठाईस", "उनतीस",
+    "तीस", "इकतीस", "बत्तीस", "तैंतीस", "चौंतीस", "पैंतीस",
+    "छत्तीस", "सैंतीस", "अड़तीस", "उनतालीस",
+    "चालीस", "इकतालीस", "बयालीस", "तैंतालीस", "चवालीस", "पैंतालीस",
+    "छियालीस", "सैंतालीस", "अड़तालीस", "उनचास",
+    "पचास", "इक्यावन", "बावन", "तिरेपन", "चौवन", "पचपन",
+    "छप्पन", "सत्तावन", "अट्ठावन", "उनसठ",
+    "साठ", "इकसठ", "बासठ", "तिरसठ", "चौंसठ", "पैंसठ",
+    "छियासठ", "सड़सठ", "अड़सठ", "उनहत्तर",
+    "सत्तर", "इकहत्तर", "बहत्तर", "तिहत्तर", "चौहत्तर", "पचहत्तर",
+    "छिहत्तर", "सतहत्तर", "अठहत्तर", "उन्यासी",
+    "अस्सी", "इक्यासी", "बयासी", "तिरासी", "चौरासी", "पचासी",
+    "छियासी", "सत्तासी", "अट्ठासी", "नवासी",
+    "नब्बे", "इक्यानवे", "बानवे", "तिरानवे", "चौरानवे", "पचानवे",
+    "छियानवे", "सत्तानवे", "अट्ठानवे", "निन्यानवे"
   ];
 
-  const tens = [
-    "", "", "बीस", "तीस", "चालीस", "पचास",
-    "साठ", "सत्तर", "अस्सी", "नब्बे"
-  ];
-
-  function twoDigit(n) {
-    if (n < 20) return ones[n];
-    return tens[Math.floor(n / 10)] + (n % 10 ? " " + ones[n % 10] : "");
-  }
-
-  function numberToHindi(num) {
+  function convert(num) {
     let str = "";
 
     if (num >= 10000000) {
-      str += twoDigit(Math.floor(num / 10000000)) + " करोड़ ";
+      str += hindiNumbers[Math.floor(num / 10000000)] + " करोड़ ";
       num %= 10000000;
     }
     if (num >= 100000) {
-      str += twoDigit(Math.floor(num / 100000)) + " लाख ";
+      str += hindiNumbers[Math.floor(num / 100000)] + " लाख ";
       num %= 100000;
     }
     if (num >= 1000) {
-      str += twoDigit(Math.floor(num / 1000)) + " हज़ार ";
+      str += hindiNumbers[Math.floor(num / 1000)] + " हज़ार ";
       num %= 1000;
     }
     if (num >= 100) {
-      str += ones[Math.floor(num / 100)] + " सौ ";
+      str += hindiNumbers[Math.floor(num / 100)] + " सौ ";
       num %= 100;
     }
     if (num > 0) {
-      str += twoDigit(num);
+      str += hindiNumbers[num];
     }
 
     return str.trim();
@@ -97,10 +102,10 @@ function amountToHindiWords(amount) {
   let rupees = Math.floor(amount);
   let paise = Math.round((amount - rupees) * 100);
 
-  let result = numberToHindi(rupees) + " रुपये";
+  let result = convert(rupees) + " रुपये";
 
   if (paise > 0) {
-    result += " " + numberToHindi(paise) + " पैसे";
+    result += " " + convert(paise) + " पैसे";
   }
 
   return result + " मात्र";

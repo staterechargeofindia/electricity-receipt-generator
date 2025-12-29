@@ -17,29 +17,43 @@ function generateTransactionId() {
   return String(lastId);
 }
 
-// Auto-fill on page load
+// Auto-fill transaction ID on page load
 document.getElementById("txnId").value = generateTransactionId();
 
 
 /**************************************
- * ENGLISH NUMBER TO WORDS
+ * ENGLISH NUMBER TO WORDS (CORRECT)
+ * Supports Thousand
  **************************************/
 function numberToWords(num) {
-  const a = [
-    "", "One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten",
-    "Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen",
-    "Seventeen","Eighteen","Nineteen"
+  const ones = [
+    "", "One","Two","Three","Four","Five","Six","Seven","Eight","Nine",
+    "Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen",
+    "Sixteen","Seventeen","Eighteen","Nineteen"
   ];
-  const b = [
+  const tens = [
     "", "", "Twenty","Thirty","Forty","Fifty",
     "Sixty","Seventy","Eighty","Ninety"
   ];
 
-  if (num < 20) return a[num];
-  if (num < 100)
-    return b[Math.floor(num / 10)] + (num % 10 ? " " + a[num % 10] : "");
-  if (num < 1000)
-    return a[Math.floor(num / 100)] + " Hundred " + numberToWords(num % 100);
+  if (num === 0) return "Zero";
+
+  if (num < 20) return ones[num];
+
+  if (num < 100) {
+    return tens[Math.floor(num / 10)] +
+      (num % 10 ? " " + ones[num % 10] : "");
+  }
+
+  if (num < 1000) {
+    return ones[Math.floor(num / 100)] + " Hundred" +
+      (num % 100 ? " " + numberToWords(num % 100) : "");
+  }
+
+  if (num < 1000000) {
+    return numberToWords(Math.floor(num / 1000)) + " Thousand" +
+      (num % 1000 ? " " + numberToWords(num % 1000) : "");
+  }
 
   return num;
 }
@@ -47,7 +61,6 @@ function numberToWords(num) {
 
 /**************************************
  * HINDI AMOUNT TO WORDS (100% CORRECT)
- * 1999 = एक हज़ार नौ सौ निन्यानवे
  **************************************/
 function amountToHindiWords(amount) {
 
@@ -76,14 +89,6 @@ function amountToHindiWords(amount) {
   function convert(num) {
     let str = "";
 
-    if (num >= 10000000) {
-      str += hindi[Math.floor(num / 10000000)] + " करोड़ ";
-      num %= 10000000;
-    }
-    if (num >= 100000) {
-      str += hindi[Math.floor(num / 100000)] + " लाख ";
-      num %= 100000;
-    }
     if (num >= 1000) {
       str += hindi[Math.floor(num / 1000)] + " हज़ार ";
       num %= 1000;

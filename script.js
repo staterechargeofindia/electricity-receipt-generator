@@ -1,4 +1,3 @@
-
 /**************************************
  * TRANSACTION ID AUTO GENERATOR
  * Start from 22649203
@@ -23,7 +22,6 @@ document.getElementById("txnId").value = generateTransactionId();
 
 /**************************************
  * ENGLISH NUMBER TO WORDS (CORRECT)
- * Supports Thousand
  **************************************/
 function numberToWords(num) {
   const ones = [

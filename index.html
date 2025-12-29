@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<title>Electricity Receipt Generator</title>
+  <meta charset="UTF-8">
+  <title>Electricity Receipt Generator</title>
 
-<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 
-<!-- PDF Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- PDF Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 
 <body>
 
-<h2>Electricity Bill Receipt Generator</h2>
+<h2 style="text-align:center;">Electricity Bill Receipt Generator</h2>
 
+<!-- ================= FORM ================= -->
 <form id="receiptForm">
 
   उपभोक्ता का नाम:
-  <input type="text" id="name" required><br>
+  <input type="text" id="name" required>
 
   खाता संख्या:
-  <input type="text" id="account" required><br>
+  <input type="text" id="account" required>
 
   रसीद संख्या:
-  <input type="text" id="receiptNo" required><br>
+  <input type="text" id="receiptNo" required>
 
   CSC Transaction ID:
-  <input type="text" id="txnId" readonly><br>
+  <input type="text" id="txnId" readonly>
 
   भुगतान प्रकार:
   <select id="paymentType">
     <option>Wallet (CSC)</option>
     <option>UPI</option>
     <option>Cash</option>
-  </select><br>
+  </select>
 
   राशि (₹):
-  <input type="number" id="amount" required><br><br>
+  <input type="number" id="amount" step="0.01" required>
 
   <button type="submit">रसीद बनाएं</button>
 
@@ -44,8 +45,19 @@
 
 <hr>
 
-<!-- RECEIPT -->
+<!-- ================= RECEIPT ================= -->
 <div id="receipt" class="receipt">
+
+  <!-- HEADER -->
+  <div class="receipt-header">
+    <div class="logo">⚡</div>
+    <div class="title">
+      मध्यांचल विद्युत वितरण निगम लिमिटेड<br>
+      <span>लखनऊ</span>
+    </div>
+  </div>
+
+  <hr>
 
   <h3 style="text-align:center;">कंप्यूटर जनित रसीद</h3>
 
@@ -59,12 +71,13 @@
   <p>शब्दों में (Hindi) : <span id="rWordsHi"></span></p>
   <p>तिथि : <span id="rDate"></span></p>
 
-  <p style="font-size:12px;">
-    यह एक कंप्यूटर जनित रसीद है, अतः हस्ताक्षर की आवश्यकता नहीं है।
+  <p style="font-size:12px; margin-top:10px;">
+    यह एक कंप्यूटर जनित रसीद है, अतः हस्ताक्षर की आवश्यकता नहीं है।<br>
+    राष्ट्र एवं स्वहित में बिजली बचाएँ।
   </p>
 
-  <button onclick="downloadPDF()">PDF Download</button>
   <button onclick="window.print()">Print</button>
+  <button onclick="downloadPDF()">PDF Download</button>
 
 </div>
 
